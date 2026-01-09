@@ -1,5 +1,5 @@
 use std::error::Error;
-use std::fmt::Display;
+use std::fmt::{self, Display};
 use std::io::{self, Write};
 use std::str::FromStr;
 
@@ -68,7 +68,7 @@ impl FromStr for Row {
 }
 
 impl Display for Row {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let username = self
             .username
             .split(|&b| b == 0)
