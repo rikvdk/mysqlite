@@ -115,7 +115,7 @@ impl Table {
         page[username_offset..username_offset + Row::USERNAME_SIZE].copy_from_slice(&row.username);
 
         let email_offset = username_offset + Row::USERNAME_SIZE;
-        page[email_offset..byte_offset + Row::EMAIL_SIZE].copy_from_slice(&row.email);
+        page[email_offset..email_offset + Row::EMAIL_SIZE].copy_from_slice(&row.email);
 
         self.row_count += 1;
     }
@@ -143,10 +143,10 @@ impl Table {
         let mut email = [0; Row::EMAIL_SIZE];
 
         let username_offset = byte_offset + Row::ID_SIZE;
-        username.copy_from_slice(&page[username_offset..byte_offset + Row::USERNAME_SIZE]);
+        username.copy_from_slice(&page[username_offset..username_offset + Row::USERNAME_SIZE]);
 
         let email_offset = username_offset + Row::USERNAME_SIZE;
-        email.copy_from_slice(&page[email_offset..byte_offset + Row::EMAIL_SIZE]);
+        email.copy_from_slice(&page[email_offset..email_offset + Row::EMAIL_SIZE]);
 
         Row {
             id,
