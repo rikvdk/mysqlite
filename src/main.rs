@@ -3,8 +3,10 @@ use std::fmt::{self, Display};
 use std::fs::OpenOptions;
 use std::io::{self, Read, Seek, SeekFrom, Write};
 use std::os::unix::fs::OpenOptionsExt;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::str::FromStr;
+
+use clap::Parser;
 
 enum Statement {
     Insert(Row),
@@ -362,10 +364,19 @@ where
     }
 }
 
+#[derive(Parser, Debug)]
+struct Args {
+    #[arg(default_value = "mysqlite.db")]
+    filename: PathBuf,
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
+    let args = Args::parse();
+    let filename = args.filename.as_path();
+
     let mut stdin = io::stdin().lock();
     let mut stdout = io::stdout().lock();
-    run(&mut stdin, &mut stdout, "mysqlite.db")
+    run(&mut stdin, &mut stdout, filename)
 }
 
 #[cfg(test)]
